@@ -146,9 +146,20 @@ public sealed class CsvSessionParser
                 case "Type":
                     network.Type = kv[1];
                     break;
+                case "SSID":
+                    network.Ssid = kv[1];
+                    break;
+                case "BSSID":
+                    network.Bssid = kv[1];
+                    break;
+                case "Signal":
+                    if (int.TryParse(kv[1],out int Signal))
+                    {
+                        network.Signal =Signal;
+                    }
+                    break;    
             }
         }
-
         return network;
     }
 }

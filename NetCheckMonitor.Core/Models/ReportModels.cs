@@ -80,6 +80,12 @@ public sealed class NetworkInfo
     public string Description { get; set; } = string.Empty;
 
     public string Type { get; set; } = string.Empty;
+
+    public string Ssid { get; set; } = string.Empty;
+
+    public string Bssid { get; set; } = string.Empty;
+
+    public int Signal { get; set; }
 }
 
 public sealed class DailyReportData

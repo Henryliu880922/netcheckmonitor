@@ -93,4 +93,18 @@ public class CsvSessionParserTests
     Assert.Equal("Intel AX210", network.Description);
     Assert.Equal("Wireless", network.Type);
 }
+    [Fact]
+    public void Parse_NetworkMarker_ParsesWirelessDetails()
+    {
+    var parser = new CsvSessionParser();
+    var session = parser.Parse(new[]
+    {
+        "Timestamp,Type,Status,LatencyMs,Target,Detail",
+        "2026-07-23T20:00:00Z,MARKER,NETWORK,,,Adapter=Wi-Fi;Description=Intel AX210;Type=Wireless;SSID=OfficeWiFi;BSSID=AA:BB:CC:DD:EE:FF;Signal=87"
+    });
+    var network = Assert.Single(session.Networks);
+    Assert.Equal("OfficeWiFi", network.Ssid);
+    Assert.Equal("AA:BB:CC:DD:EE:FF", network.Bssid);
+    Assert.Equal(87, network.Signal);
+}
 }
