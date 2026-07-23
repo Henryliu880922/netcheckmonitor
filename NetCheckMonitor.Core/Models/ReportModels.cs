@@ -68,7 +68,18 @@ public sealed class MonitoringSession
 
     public List<EventNote> EventNotes { get; set; } = new();
 
+    public List<NetworkInfo> Networks { get; } = [];
+
     public string SourceFile { get; set; } = string.Empty;
+}
+
+public sealed class NetworkInfo
+{
+    public string Adapter { get; set; } = string.Empty;
+
+    public string Description { get; set; } = string.Empty;
+
+    public string Type { get; set; } = string.Empty;
 }
 
 public sealed class DailyReportData

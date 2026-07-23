@@ -79,4 +79,18 @@ public class CsvSessionParserTests
     Assert.Equal("MacBook-Pro", session.MachineName);
     Assert.Equal("ABC123", session.MachineId);
 }
+    [Fact]
+    public void Parse_NetworkMarker_AddsNetworkInfo()
+    {
+    var parser = new CsvSessionParser();
+    var session = parser.Parse(new[]
+    {
+        "Timestamp,Type,Status,LatencyMs,Target,Detail",
+        "2026-07-23T20:00:00Z,MARKER,NETWORK,,,Adapter=Wi-Fi;Description=Intel AX210;Type=Wireless"
+    });
+    var network = Assert.Single(session.Networks);
+    Assert.Equal("Wi-Fi", network.Adapter);
+    Assert.Equal("Intel AX210", network.Description);
+    Assert.Equal("Wireless", network.Type);
+}
 }
