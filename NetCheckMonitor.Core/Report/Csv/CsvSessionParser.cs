@@ -44,7 +44,18 @@ public sealed class CsvSessionParser
                 session.End = timestamp;
                 session.Stopped = true;
             }
-
+            else if (string.Equals(fields[2], "EVENT_NOTE", StringComparison.Ordinal))
+            {
+                session.EventNotes.Add(new EventNote
+            {
+                Time = timestamp,
+                Text = fields[5]
+            });
+            }
+            else if (string.Equals(fields[2], "COMPUTER", StringComparison.Ordinal))
+            {
+                ParseComputer(fields[5], session);
+            }
                 continue;
             }
             if (!string.Equals(fields[1], "CHECK", StringComparison.Ordinal))
@@ -77,4 +88,28 @@ public sealed class CsvSessionParser
             (left, right) => left.Time.CompareTo(right.Time));
         return session;
     }
+    private static void ParseComputer(
+    string detail,
+    MonitoringSession session)
+{
+    int openBracket = detail.IndexOf(
+        " [",
+        StringComparison.Ordinal);
+
+    int closeBracket = openBracket >= 0
+        ? detail.IndexOf(']', openBracket + 2)
+        : -1;
+
+    if (openBracket > 0)
+    {
+        session.MachineName =
+            detail[..openBracket].Trim();
+    }
+
+    if (openBracket >= 0 && closeBracket > openBracket)
+    {
+        session.MachineId =
+            detail[(openBracket + 2)..closeBracket].Trim();
+    }
+}
 }
