@@ -33,6 +33,20 @@ public sealed class CsvSessionParser
             {
                 continue;
             }
+            if (string.Equals(fields[1], "MARKER", StringComparison.Ordinal))
+            {
+            if (string.Equals(fields[2], "STARTED", StringComparison.Ordinal))
+            {
+                session.Start = timestamp;
+            }
+            else if (string.Equals(fields[2], "STOPPED", StringComparison.Ordinal))
+            {
+                session.End = timestamp;
+                session.Stopped = true;
+            }
+
+                continue;
+            }
             if (!string.Equals(fields[1], "CHECK", StringComparison.Ordinal))
             {
                 continue;

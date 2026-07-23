@@ -33,4 +33,23 @@ public class CsvSessionParserTests
     Assert.Equal("https://example.com/", record.Target);
     Assert.Equal("OK", record.Detail);
     }
+    [Fact]
+    public void Parse_StartAndStopMarkers_SetSessionTimes()
+    {
+    var parser = new CsvSessionParser();
+    var session = parser.Parse(new[]
+    {
+        "Timestamp,Type,Status,LatencyMs,Target,Detail",
+        "2026-07-23T20:00:00Z,MARKER,STARTED,,,,",
+        "2026-07-23T20:30:00Z,CHECK,ONLINE,15,https://example.com/,OK",
+        "2026-07-23T21:00:00Z,MARKER,STOPPED,,,,"
+    });
+    Assert.Equal(
+        new DateTime(2026, 7, 23, 20, 0, 0, DateTimeKind.Utc),
+        session.Start);
+    Assert.Equal(
+        new DateTime(2026, 7, 23, 21, 0, 0, DateTimeKind.Utc),
+        session.End);
+    Assert.True(session.Stopped);
+}
 }
