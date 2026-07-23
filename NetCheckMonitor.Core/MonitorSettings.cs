@@ -16,6 +16,8 @@ public sealed class MonitorTargetSettings
     public bool AdvancedDiagnosticsEnabled { get; set; }
     public bool PreventSleepWhileMonitoring { get; set; } = true;
     public bool PreventShutdownWhileMonitoring { get; set; }
+
+    public SpeedTestOptions SpeedTest { get; set; } = SpeedTestOptions.Defaults();
 }
 
 public static class MonitorSettingsStore
@@ -163,7 +165,8 @@ public static class MonitorSettingsStore
         {
             UseCustomTargets = false,
             CustomTargets = new List<string>(),
-            PreventSleepWhileMonitoring = true
+            PreventSleepWhileMonitoring = true,
+            SpeedTest = SpeedTestOptions.Defaults()
         };
     }
 
@@ -175,8 +178,22 @@ public static class MonitorSettingsStore
             return DefaultSettings();
 
         if (!hasSleepSetting)
+        {
             value.PreventSleepWhileMonitoring = true;
+        }
+        value.SpeedTest ??= SpeedTestOptions.Defaults();    
+        value.SpeedTest.IntervalHours = Math.Clamp(
+        value.SpeedTest.IntervalHours <= 0 ? 24 : value.SpeedTest.IntervalHours,
+                1,
+                168);
 
+        value.SpeedTest.Level = value.SpeedTest.EffectiveLevel.ToString();
+
+        value.SpeedTest.RateLimitBackoffLevel = Math.Clamp(
+        value.SpeedTest.RateLimitBackoffLevel,
+                0,
+                5);
+            
         value.CustomTargets ??= new List<string>();
 
         var valid = new List<string>();
