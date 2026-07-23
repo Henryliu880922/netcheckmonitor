@@ -26,3 +26,7 @@ Thumbs.db
 Desktop.ini
 .vs/
 .vscode/
+
+# .NET SDK
+**/bin/
+**/obj/
