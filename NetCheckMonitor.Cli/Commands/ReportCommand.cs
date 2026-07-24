@@ -1,3 +1,5 @@
+using System.IO;
+
 namespace NetCheckMonitor.Cli.Commands;
 
 internal static class ReportCommand
@@ -16,6 +18,12 @@ internal static class ReportCommand
 
         string inputPath = args[1];
         string outputPath = args[3];
+
+        if (!File.Exists(inputPath))
+        {
+            Console.WriteLine($"Input file not found: {inputPath}");
+            return;
+        }
 
         Console.WriteLine($"Input: {inputPath}");
         Console.WriteLine($"Output: {outputPath}");
