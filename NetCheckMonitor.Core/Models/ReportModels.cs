@@ -81,11 +81,20 @@ public sealed class NetworkInfo
 
     public string Type { get; set; } = string.Empty;
 
-    public string Ssid { get; set; } = string.Empty;
+    public string SSID { get; set; } = string.Empty;
 
-    public string Bssid { get; set; } = string.Empty;
+    public string BSSID { get; set; } = string.Empty;
 
     public int Signal { get; set; }
+    public string IPv4 { get; set; } = string.Empty;
+
+    public string IPv6 { get; set; } = string.Empty;
+
+    public string Gateway { get; set; } = string.Empty;
+
+    public string Dns { get; set; } = string.Empty;
+
+    public string MacAddress { get; set; } = string.Empty;
 }
 
 public sealed class DailyReportData

@@ -147,17 +147,35 @@ public sealed class CsvSessionParser
                     network.Type = kv[1];
                     break;
                 case "SSID":
-                    network.Ssid = kv[1];
+                    network.SSID = kv[1];
                     break;
                 case "BSSID":
-                    network.Bssid = kv[1];
+                    network.BSSID = kv[1];
                     break;
                 case "Signal":
-                    if (int.TryParse(kv[1],out int Signal))
+                    if (int.TryParse(kv[1], out int Signal))
                     {
-                        network.Signal =Signal;
+                        network.Signal = Signal;
                     }
-                    break;    
+                    break;
+                case "IPv4":
+                    network.IPv4 = kv[1];
+                    break;
+                case "IPv6":
+                    network.IPv6 = kv[1];
+                    break;
+
+                case "Gateway":
+                    network.Gateway = kv[1];
+                    break;
+
+                case "DNS":
+                    network.Dns = kv[1];
+                    break;
+                case "MAC":
+                case "MacAddress":
+                    network.MacAddress = kv[1];
+                    break;
             }
         }
         return network;
