@@ -22,6 +22,11 @@ public sealed class DailyReportBuilder
             OutageCount = session.Outages.Count,
             Availability = availability,
             CheckCount = session.Records.Count,
+            OfflineCount = session.Records.Count(
+                record => string.Equals(
+                record.Status,
+                "OFFLINE",
+                StringComparison.OrdinalIgnoreCase)),
             Records = session.Records.ToList(),
             EventNotes = session.EventNotes.ToList()
         };

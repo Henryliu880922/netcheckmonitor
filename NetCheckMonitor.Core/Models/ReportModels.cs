@@ -131,6 +131,8 @@ public sealed class DailyReportData
 
     public double Availability { get; set; }
     public int CheckCount { get; set; }
+
+    public int OfflineCount { get; set; }
 }
 public sealed class PausePeriod
 {

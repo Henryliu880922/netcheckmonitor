@@ -198,4 +198,35 @@ public class DailyReportBuilderTests
 
         Assert.Equal(3, report.CheckCount);
     }
+    [Fact]
+public void Build_CalculatesOfflineCount()
+{
+    var session = new MonitoringSession
+    {
+        Start = new DateTime(2026, 7, 24, 9, 0, 0, DateTimeKind.Utc),
+        End = new DateTime(2026, 7, 24, 9, 5, 0, DateTimeKind.Utc),
+        Stopped = true
+    };
+
+    session.Records.Add(new MonitoringRecord
+    {
+        Status = "ONLINE"
+    });
+
+    session.Records.Add(new MonitoringRecord
+    {
+        Status = "OFFLINE"
+    });
+
+    session.Records.Add(new MonitoringRecord
+    {
+        Status = "OFFLINE"
+    });
+
+    var builder = new DailyReportBuilder();
+
+    var report = builder.Build(session);
+
+    Assert.Equal(2, report.OfflineCount);
+}
 }
