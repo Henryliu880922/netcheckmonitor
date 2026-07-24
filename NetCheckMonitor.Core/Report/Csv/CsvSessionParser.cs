@@ -10,10 +10,7 @@ public sealed class CsvSessionParser
         return Parse(File.ReadLines(filePath));
     }
 
-    public MonitoringSession Parse(Stream stream)
-    {
-        throw new NotImplementedException();
-    }
+
 
     public MonitoringSession Parse(IEnumerable<string> lines)
     {
@@ -132,6 +129,23 @@ public sealed class CsvSessionParser
         session.Records.Sort(
             (left, right) => left.Time.CompareTo(right.Time));
         return session;
+    }
+    public MonitoringSession Parse(Stream stream)
+    {
+        ArgumentNullException.ThrowIfNull(stream);
+
+        using var reader = new StreamReader(stream);
+
+        return Parse(ReadLines(reader));
+    }
+    private static IEnumerable<string> ReadLines(TextReader reader)
+    {
+        string? line;
+
+        while ((line = reader.ReadLine()) is not null)
+        {
+            yield return line;
+        }
     }
     private static void ParseComputer(
     string detail,

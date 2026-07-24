@@ -1,5 +1,5 @@
 using NetCheckMonitor.Core.Report.Csv;
-
+using System.Text;
 namespace NetCheckMonitor.Core.Tests;
 
 public class CsvSessionParserTests
@@ -302,5 +302,26 @@ public class CsvSessionParserTests
         {
             File.Delete(path);
         }
+    }
+    [Fact]
+    public void ParseStream_ReadsRecordsFromStream()
+    {
+        const string csv =
+            """
+        Timestamp,Type,Status,Latency,Target,Detail
+        2026-07-24T10:00:00+08:00,CHECK,ONLINE,15,1.1.1.1,OK
+        """;
+
+        using var stream = new MemoryStream(
+            System.Text.Encoding.UTF8.GetBytes(csv));
+
+        var parser = new CsvSessionParser();
+
+        MonitoringSession session = parser.Parse(stream);
+
+        Assert.Single(session.Records);
+        Assert.True(session.Records[0].Online);
+        Assert.Equal(15, session.Records[0].Latency);
+        Assert.Equal("1.1.1.1", session.Records[0].Target);
     }
 }
