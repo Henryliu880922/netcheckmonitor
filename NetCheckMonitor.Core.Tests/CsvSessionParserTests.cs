@@ -218,4 +218,62 @@ public class CsvSessionParserTests
             new DateTime(2026, 7, 24, 9, 5, 0, DateTimeKind.Utc),
             pause.End);
     }
+    [Fact]
+    public void Parse_MultiplePausePeriods_AddsAllPeriods()
+    {
+        var parser = new CsvSessionParser();
+
+        var session = parser.Parse(new[]
+        {
+        "Timestamp,Type,Status,LatencyMs,Target,Detail",
+        "2026-07-24T09:00:00Z,MARKER,PAUSED,,,First pause",
+        "2026-07-24T09:05:00Z,MARKER,RESUMED,,,First resume",
+        "2026-07-24T10:00:00Z,MARKER,PAUSED,,,Second pause",
+        "2026-07-24T10:10:00Z,MARKER,RESUMED,,,Second resume"
+    });
+
+        Assert.Equal(2, session.PausePeriods.Count);
+
+        Assert.Equal(
+            new DateTime(2026, 7, 24, 9, 0, 0, DateTimeKind.Utc),
+            session.PausePeriods[0].Start);
+
+        Assert.Equal(
+            new DateTime(2026, 7, 24, 9, 5, 0, DateTimeKind.Utc),
+            session.PausePeriods[0].End);
+
+        Assert.Equal(
+            new DateTime(2026, 7, 24, 10, 0, 0, DateTimeKind.Utc),
+            session.PausePeriods[1].Start);
+
+        Assert.Equal(
+            new DateTime(2026, 7, 24, 10, 10, 0, DateTimeKind.Utc),
+            session.PausePeriods[1].End);
+    }
+    [Fact]
+    public void Parse_OfflineChecks_CreatesOutageEvent()
+    {
+        var parser = new CsvSessionParser();
+
+        var session = parser.Parse(new[]
+        {
+        "Timestamp,Type,Status,LatencyMs,Target,Detail",
+        "2026-07-24T09:00:00Z,CHECK,ONLINE,10,1.1.1.1,OK",
+        "2026-07-24T09:01:00Z,CHECK,OFFLINE,0,1.1.1.1,Timeout",
+        "2026-07-24T09:02:00Z,CHECK,OFFLINE,0,1.1.1.1,Timeout",
+        "2026-07-24T09:03:00Z,CHECK,ONLINE,12,1.1.1.1,Recovered"
+    });
+
+        Assert.Single(session.Outages);
+
+        var outage = session.Outages[0];
+
+        Assert.Equal(
+            new DateTime(2026, 7, 24, 9, 1, 0, DateTimeKind.Utc),
+            outage.Start);
+
+        Assert.Equal(
+            new DateTime(2026, 7, 24, 9, 3, 0, DateTimeKind.Utc),
+            outage.End);
+    }
 }

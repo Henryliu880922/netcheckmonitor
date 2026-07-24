@@ -19,6 +19,7 @@ public sealed class CsvSessionParser
 
         var session = new MonitoringSession();
         DateTime? pauseStart = null;
+        DateTime? outageStart = null;
         foreach (string line in lines)
         {
             IReadOnlyList<string> fields = CsvLineParser.Parse(line);
@@ -85,12 +86,34 @@ public sealed class CsvSessionParser
                 }
                 continue;
             }
-
             if (!string.Equals(fields[1], "CHECK", StringComparison.Ordinal))
             {
                 continue;
             }
+
+            if (string.Equals(fields[2], "OFFLINE", StringComparison.Ordinal))
+            {
+                if (!outageStart.HasValue)
+                {
+                    outageStart = timestamp;
+                }
+            }
+            else if (string.Equals(fields[2], "ONLINE", StringComparison.Ordinal))
+            {
+                if (outageStart.HasValue)
+                {
+                    session.Outages.Add(new OutagePeriod
+                    {
+                        Start = outageStart.Value,
+                        End = timestamp
+                    });
+
+                    outageStart = null;
+                }
+            }
+
             long.TryParse(fields[3], out long latency);
+
             session.Records.Add(new MonitoringRecord
             {
                 Time = timestamp,
@@ -103,14 +126,6 @@ public sealed class CsvSessionParser
                 Target = fields[4],
                 Detail = fields[5]
             });
-            if (session.Start == DateTime.MaxValue)
-            {
-                session.Start = timestamp;
-            }
-            if (timestamp > session.End)
-            {
-                session.End = timestamp;
-            }
         }
         session.Records.Sort(
             (left, right) => left.Time.CompareTo(right.Time));

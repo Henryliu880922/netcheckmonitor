@@ -73,6 +73,8 @@ public sealed class MonitoringSession
     public string SourceFile { get; set; } = string.Empty;
 
     public List<PausePeriod> PausePeriods { get; } = [];
+
+    public List<OutagePeriod> Outages { get; } = [];
 }
 
 public sealed class NetworkInfo
@@ -131,3 +133,10 @@ public sealed class PausePeriod
 
         public DateTime End { get; set; }
     }
+
+public sealed class OutagePeriod
+{
+    public DateTime Start { get; set; }
+
+    public DateTime End { get; set; }
+}
