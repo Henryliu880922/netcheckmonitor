@@ -199,34 +199,78 @@ public class DailyReportBuilderTests
         Assert.Equal(3, report.CheckCount);
     }
     [Fact]
-public void Build_CalculatesOfflineCount()
-{
-    var session = new MonitoringSession
+    public void Build_CalculatesOfflineCount()
     {
-        Start = new DateTime(2026, 7, 24, 9, 0, 0, DateTimeKind.Utc),
-        End = new DateTime(2026, 7, 24, 9, 5, 0, DateTimeKind.Utc),
-        Stopped = true
-    };
+        var session = new MonitoringSession
+        {
+            Start = new DateTime(2026, 7, 24, 9, 0, 0, DateTimeKind.Utc),
+            End = new DateTime(2026, 7, 24, 9, 5, 0, DateTimeKind.Utc),
+            Stopped = true
+        };
 
-    session.Records.Add(new MonitoringRecord
+        session.Records.Add(new MonitoringRecord
+        {
+            Status = "ONLINE"
+        });
+
+        session.Records.Add(new MonitoringRecord
+        {
+            Status = "OFFLINE"
+        });
+
+        session.Records.Add(new MonitoringRecord
+        {
+            Status = "OFFLINE"
+        });
+
+        var builder = new DailyReportBuilder();
+
+        var report = builder.Build(session);
+
+        Assert.Equal(2, report.OfflineCount);
+    }
+    [Fact]
+    public void Build_CalculatesAverageLatencyForOnlineRecords()
     {
-        Status = "ONLINE"
-    });
+        var session = new MonitoringSession
+        {
+            Start = new DateTime(2026, 7, 24, 9, 0, 0, DateTimeKind.Utc),
+            End = new DateTime(2026, 7, 24, 9, 5, 0, DateTimeKind.Utc),
+            Stopped = true
+        };
 
-    session.Records.Add(new MonitoringRecord
-    {
-        Status = "OFFLINE"
-    });
+        session.Records.Add(new MonitoringRecord
+        {
+            Online = true,
+            Status = "ONLINE",
+            Latency = 10
+        });
 
-    session.Records.Add(new MonitoringRecord
-    {
-        Status = "OFFLINE"
-    });
+        session.Records.Add(new MonitoringRecord
+        {
+            Online = true,
+            Status = "ONLINE",
+            Latency = 20
+        });
 
-    var builder = new DailyReportBuilder();
+        session.Records.Add(new MonitoringRecord
+        {
+            Online = true,
+            Status = "ONLINE",
+            Latency = 30
+        });
 
-    var report = builder.Build(session);
+        session.Records.Add(new MonitoringRecord
+        {
+            Online = false,
+            Status = "OFFLINE",
+            Latency = 0
+        });
 
-    Assert.Equal(2, report.OfflineCount);
-}
+        var builder = new DailyReportBuilder();
+
+        var report = builder.Build(session);
+
+        Assert.Equal(20d, report.AverageLatency);
+    }
 }

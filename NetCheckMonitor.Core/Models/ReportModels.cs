@@ -133,13 +133,15 @@ public sealed class DailyReportData
     public int CheckCount { get; set; }
 
     public int OfflineCount { get; set; }
+
+    public double AverageLatency { get; set; }
 }
 public sealed class PausePeriod
 {
-        public DateTime Start { get; set; }
+    public DateTime Start { get; set; }
 
-        public DateTime End { get; set; }
-    }
+    public DateTime End { get; set; }
+}
 
 public sealed class OutagePeriod
 {

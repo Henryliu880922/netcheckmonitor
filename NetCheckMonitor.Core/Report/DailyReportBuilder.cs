@@ -10,6 +10,7 @@ public sealed class DailyReportBuilder
         TimeSpan outage = CalculateTotalOutage(session);
         TimeSpan longestOutage = CalculateLongestOutage(session);
         double availability = CalculateAvailability(effective, outage);
+        double averageLatency = CalculateAverageLatency(session);
 
         return new DailyReportData
         {
@@ -27,6 +28,7 @@ public sealed class DailyReportBuilder
                 record.Status,
                 "OFFLINE",
                 StringComparison.OrdinalIgnoreCase)),
+            AverageLatency = averageLatency,
             Records = session.Records.ToList(),
             EventNotes = session.EventNotes.ToList()
         };
@@ -72,5 +74,19 @@ public sealed class DailyReportBuilder
             : (effective - outage).TotalSeconds
                 / effective.TotalSeconds
                 * 100d;
+    }
+    private static double CalculateAverageLatency(
+    MonitoringSession session)
+    {
+        var onlineRecords = session.Records
+            .Where(record => record.Online);
+
+        if (!onlineRecords.Any())
+        {
+            return 0d;
+        }
+
+        return onlineRecords.Average(
+            record => (double)record.Latency);
     }
 }
