@@ -64,7 +64,10 @@ public sealed class CsvSessionParser
                 }
                 else if (string.Equals(fields[2], "PAUSED", StringComparison.Ordinal))
                 {
-                    pauseStart = timestamp;
+                    if (!pauseStart.HasValue)
+                    {
+                        pauseStart = timestamp;
+                    }
                 }
                 else if (string.Equals(fields[2], "RESUMED", StringComparison.Ordinal))
                 {

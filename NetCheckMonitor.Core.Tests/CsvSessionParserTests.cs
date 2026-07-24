@@ -159,4 +159,63 @@ public class CsvSessionParserTests
             new DateTime(2026, 7, 24, 9, 5, 0, DateTimeKind.Utc),
             pause.End);
     }
+    [Fact]
+    public void Parse_PausedWithoutResumed_DoesNotAddPausePeriod()
+    {
+        var parser = new CsvSessionParser();
+
+        var session = parser.Parse(new[]
+        {
+        "Timestamp,Type,Status,LatencyMs,Target,Detail",
+        "2026-07-24T09:00:00Z,MARKER,PAUSED,,,User paused monitoring"
+    });
+
+        Assert.Empty(session.PausePeriods);
+    }
+    [Fact]
+    public void Parse_DuplicatePausedMarker_KeepsOriginalPauseStart()
+    {
+        var parser = new CsvSessionParser();
+
+        var session = parser.Parse(new[]
+        {
+        "Timestamp,Type,Status,LatencyMs,Target,Detail",
+        "2026-07-24T09:00:00Z,MARKER,PAUSED,,,First pause",
+        "2026-07-24T09:02:00Z,MARKER,PAUSED,,,Duplicate pause",
+        "2026-07-24T09:05:00Z,MARKER,RESUMED,,,Resume"
+    });
+
+        var pause = Assert.Single(session.PausePeriods);
+
+        Assert.Equal(
+            new DateTime(2026, 7, 24, 9, 0, 0, DateTimeKind.Utc),
+            pause.Start);
+
+        Assert.Equal(
+            new DateTime(2026, 7, 24, 9, 5, 0, DateTimeKind.Utc),
+            pause.End);
+    }
+    [Fact]
+    public void Parse_DuplicateResumedMarker_AddsOnlyOnePausePeriod()
+    {
+        var parser = new CsvSessionParser();
+
+        var session = parser.Parse(new[]
+        {
+        "Timestamp,Type,Status,LatencyMs,Target,Detail",
+        "2026-07-24T09:00:00Z,MARKER,PAUSED,,,Pause",
+        "2026-07-24T09:05:00Z,MARKER,RESUMED,,,First resume",
+        "2026-07-24T09:06:00Z,MARKER,RESUMED,,,Duplicate resume"
+    });
+
+        var pause = Assert.Single(session.PausePeriods);
+
+        Assert.Equal(
+            new DateTime(2026, 7, 24, 9, 0, 0, DateTimeKind.Utc),
+            pause.Start);
+
+        Assert.Equal(
+            new DateTime(2026, 7, 24, 9, 5, 0, DateTimeKind.Utc),
+            pause.End);
+    }
 }
