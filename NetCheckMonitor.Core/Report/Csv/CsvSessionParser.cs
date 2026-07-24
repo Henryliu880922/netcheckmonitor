@@ -5,7 +5,9 @@ public sealed class CsvSessionParser
 {
     public MonitoringSession Parse(string filePath)
     {
-        throw new NotImplementedException();
+        ArgumentException.ThrowIfNullOrWhiteSpace(filePath);
+
+        return Parse(File.ReadLines(filePath));
     }
 
     public MonitoringSession Parse(Stream stream)

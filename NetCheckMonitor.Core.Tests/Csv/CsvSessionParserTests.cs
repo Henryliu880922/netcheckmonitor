@@ -276,4 +276,31 @@ public class CsvSessionParserTests
             new DateTime(2026, 7, 24, 9, 3, 0, DateTimeKind.Utc),
             outage.End);
     }
+    [Fact]
+    public void ParseFilePath_ReadsRecordsFromFile()
+    {
+        string path = Path.GetTempFileName();
+
+        try
+        {
+            File.WriteAllLines(path,
+            [
+                "Timestamp,Type,Status,Latency,Target,Detail",
+            "2026-07-24T10:00:00+08:00,CHECK,ONLINE,15,1.1.1.1,OK"
+            ]);
+
+            var parser = new CsvSessionParser();
+
+            MonitoringSession session = parser.Parse(path);
+
+            Assert.Single(session.Records);
+            Assert.True(session.Records[0].Online);
+            Assert.Equal(15, session.Records[0].Latency);
+            Assert.Equal("1.1.1.1", session.Records[0].Target);
+        }
+        finally
+        {
+            File.Delete(path);
+        }
+    }
 }
