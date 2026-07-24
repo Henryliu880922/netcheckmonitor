@@ -9,20 +9,25 @@ public sealed class DailyReportBuilder
         TimeSpan total = session.End - session.Start;
 
         TimeSpan paused = session.PausePeriods
-
             .Aggregate(
-
                 TimeSpan.Zero,
-
                 (sum, pause) => sum + (pause.End - pause.Start));
 
+        TimeSpan outage = session.Outages
+            .Aggregate(
+                TimeSpan.Zero,
+                (sum, item) => sum + (item.End - item.Start));
         TimeSpan effective = total - paused;
+
         return new DailyReportData
         {
             MachineName = session.MachineName,
             MachineId = session.MachineId,
             Day = session.Start.Date,
+
             Effective = effective,
+            Outage = outage,
+            
             Records = session.Records.ToList(),
             EventNotes = session.EventNotes.ToList()
         };
