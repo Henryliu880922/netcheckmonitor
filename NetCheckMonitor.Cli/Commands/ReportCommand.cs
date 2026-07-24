@@ -1,4 +1,7 @@
 using System.IO;
+using NetCheckMonitor.Core.Report;
+using NetCheckMonitor.Core.Report.Csv;
+using NetCheckMonitor.Core;
 
 namespace NetCheckMonitor.Cli.Commands;
 
@@ -25,7 +28,15 @@ internal static class ReportCommand
             return;
         }
 
-        Console.WriteLine($"Input: {inputPath}");
-        Console.WriteLine($"Output: {outputPath}");
+        var parser = new CsvSessionParser();
+        MonitoringSession session = parser.Parse(inputPath);
+
+        var reportService = new ReportService();
+
+        string csv = reportService.ExportDailyReportCsv(session);
+
+        File.WriteAllText(outputPath, csv);
+
+        Console.WriteLine($"Report written to: {outputPath}");
     }
 }
