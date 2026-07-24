@@ -140,4 +140,26 @@ public class DailyReportBuilderTests
 
         Assert.Equal(2, report.OutageCount);
     }
+    [Fact]
+    public void Build_CalculatesAvailability()
+    {
+        var session = new MonitoringSession
+        {
+            Start = new DateTime(2026, 7, 24, 9, 0, 0, DateTimeKind.Utc),
+            End = new DateTime(2026, 7, 24, 10, 0, 0, DateTimeKind.Utc),
+            Stopped = true
+        };
+
+        session.Outages.Add(new OutagePeriod
+        {
+            Start = new DateTime(2026, 7, 24, 9, 10, 0, DateTimeKind.Utc),
+            End = new DateTime(2026, 7, 24, 9, 16, 0, DateTimeKind.Utc)
+        });
+
+        var builder = new DailyReportBuilder();
+
+        var report = builder.Build(session);
+
+        Assert.Equal(90d, report.Availability);
+    }
 }

@@ -128,6 +128,8 @@ public sealed class DailyReportData
     public List<EventNote> EventNotes { get; set; } = new();
 
     public int OutageCount { get; set; }
+
+    public double Availability { get; set; }
 }
 public sealed class PausePeriod
 {

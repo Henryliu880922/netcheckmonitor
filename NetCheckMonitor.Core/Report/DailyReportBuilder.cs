@@ -23,6 +23,12 @@ public sealed class DailyReportBuilder
                 item => item.End - item.Start);
         TimeSpan effective = total - paused;
 
+        double availability = effective <= TimeSpan.Zero
+            ? 0d
+            : (effective - outage).TotalSeconds
+            / effective.TotalSeconds
+            * 100d;
+
         return new DailyReportData
         {
             MachineName = session.MachineName,
@@ -33,6 +39,7 @@ public sealed class DailyReportBuilder
             Outage = outage,
             LongestOutage = longestOutage,
             OutageCount = session.Outages.Count,
+            Availability = availability,
 
             Records = session.Records.ToList(),
             EventNotes = session.EventNotes.ToList()
