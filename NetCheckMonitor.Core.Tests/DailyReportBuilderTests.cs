@@ -317,4 +317,57 @@ public class DailyReportBuilderTests
 
         Assert.Equal(35L, report.MaximumLatency);
     }
+    [Fact]
+    public void Build_ReturnsZeroAverageLatency_WhenNoOnlineRecords()
+    {
+        var session = new MonitoringSession
+        {
+            Start = new DateTime(2026, 7, 24, 9, 0, 0, DateTimeKind.Utc),
+            End = new DateTime(2026, 7, 24, 9, 5, 0, DateTimeKind.Utc),
+            Stopped = true
+        };
+
+        session.Records.Add(new MonitoringRecord
+        {
+            Online = false,
+            Status = "OFFLINE",
+            Latency = 100
+        });
+
+        session.Records.Add(new MonitoringRecord
+        {
+            Online = false,
+            Status = "OFFLINE",
+            Latency = 200
+        });
+
+        var builder = new DailyReportBuilder();
+
+        var report = builder.Build(session);
+
+        Assert.Equal(0d, report.AverageLatency);
+    }
+    [Fact]
+    public void Build_ReturnsZeroMaximumLatency_WhenNoOnlineRecords()
+    {
+        var session = new MonitoringSession
+        {
+            Start = new DateTime(2026, 7, 24, 9, 0, 0, DateTimeKind.Utc),
+            End = new DateTime(2026, 7, 24, 9, 5, 0, DateTimeKind.Utc),
+            Stopped = true
+        };
+
+        session.Records.Add(new MonitoringRecord
+        {
+            Online = false,
+            Status = "OFFLINE",
+            Latency = 9999
+        });
+
+        var builder = new DailyReportBuilder();
+
+        var report = builder.Build(session);
+
+        Assert.Equal(0L, report.MaximumLatency);
+    }
 }
