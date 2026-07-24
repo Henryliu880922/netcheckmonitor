@@ -126,6 +126,8 @@ public sealed class DailyReportData
     public List<MonitoringPeriod> Pauses { get; set; } = new();
 
     public List<EventNote> EventNotes { get; set; } = new();
+
+    public int OutageCount { get; set; }
 }
 public sealed class PausePeriod
 {
