@@ -26,8 +26,8 @@ public sealed class ReportService
 
         string row = string.Join(",",
             report.Day.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
-            report.MachineName,
-            report.MachineId,
+            EscapeCsv(report.MachineName),
+            EscapeCsv(report.MachineId),
             report.Availability.ToString(
                 CultureInfo.InvariantCulture),
             report.CheckCount.ToString(
@@ -41,4 +41,33 @@ public sealed class ReportService
 
         return $"{header}\n{row}";
     }
+    public void ExportDailyReportCsvFile(
+        MonitoringSession session,
+        string path)
+    {
+        ArgumentNullException.ThrowIfNull(session);
+        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+
+        string csv = ExportDailyReportCsv(session);
+
+        File.WriteAllText(path, csv);
+    }
+    private static string EscapeCsv(string value)
+    {
+        if (value.Contains('"'))
+        {
+            value = value.Replace("\"", "\"\"");
+        }
+
+        if (value.Contains(',')
+            || value.Contains('"')
+            || value.Contains('\n')
+            || value.Contains('\r'))
+        {
+            return $"\"{value}\"";
+        }
+
+        return value;
+    }
+
 }
