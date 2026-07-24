@@ -244,4 +244,39 @@ public sealed class PortableSettingsStoreTests
             }
         }
     }
+    [Fact]
+    public void LoadFromPath_DisablesCustomTargets_WhenNoValidTargetsRemain()
+    {
+        string path = Path.Combine(
+            Path.GetTempPath(),
+            Guid.NewGuid() + ".json");
+
+        try
+        {
+            var settings = new MonitorTargetSettings
+            {
+                UseCustomTargets = true,
+                CustomTargets = new List<string>
+            {
+                "not a valid target",
+                "ftp://example.com"
+            }
+            };
+
+            MonitorSettingsStore.SaveToPath(path, settings);
+
+            MonitorTargetSettings loaded =
+                MonitorSettingsStore.LoadFromPath(path);
+
+            Assert.False(loaded.UseCustomTargets);
+            Assert.Empty(loaded.CustomTargets);
+        }
+        finally
+        {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+        }
+    }
 }
