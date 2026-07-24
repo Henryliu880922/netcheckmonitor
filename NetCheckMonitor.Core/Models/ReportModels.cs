@@ -130,6 +130,7 @@ public sealed class DailyReportData
     public int OutageCount { get; set; }
 
     public double Availability { get; set; }
+    public int CheckCount { get; set; }
 }
 public sealed class PausePeriod
 {

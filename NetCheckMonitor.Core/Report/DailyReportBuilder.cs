@@ -40,6 +40,7 @@ public sealed class DailyReportBuilder
             LongestOutage = longestOutage,
             OutageCount = session.Outages.Count,
             Availability = availability,
+            CheckCount = session.Records.Count,
 
             Records = session.Records.ToList(),
             EventNotes = session.EventNotes.ToList()

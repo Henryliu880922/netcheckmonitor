@@ -162,4 +162,40 @@ public class DailyReportBuilderTests
 
         Assert.Equal(90d, report.Availability);
     }
+    [Fact]
+    public void Build_ReturnsZeroAvailabilityWhenEffectiveTimeIsZero()
+    {
+        var session = new MonitoringSession
+        {
+            Start = new DateTime(2026, 7, 24, 9, 0, 0, DateTimeKind.Utc),
+            End = new DateTime(2026, 7, 24, 9, 0, 0, DateTimeKind.Utc),
+            Stopped = true
+        };
+
+        var builder = new DailyReportBuilder();
+
+        var report = builder.Build(session);
+
+        Assert.Equal(0d, report.Availability);
+    }
+    [Fact]
+    public void Build_CalculatesCheckCount()
+    {
+        var session = new MonitoringSession
+        {
+            Start = new DateTime(2026, 7, 24, 9, 0, 0, DateTimeKind.Utc),
+            End = new DateTime(2026, 7, 24, 9, 5, 0, DateTimeKind.Utc),
+            Stopped = true
+        };
+
+        session.Records.Add(new MonitoringRecord());
+        session.Records.Add(new MonitoringRecord());
+        session.Records.Add(new MonitoringRecord());
+
+        var builder = new DailyReportBuilder();
+
+        var report = builder.Build(session);
+
+        Assert.Equal(3, report.CheckCount);
+    }
 }
