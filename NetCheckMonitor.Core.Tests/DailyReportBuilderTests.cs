@@ -28,4 +28,28 @@ public class DailyReportBuilderTests
         Assert.Single(report.Records);
         Assert.Single(report.EventNotes);
     }
+    [Fact]
+    public void Build_CalculatesEffectiveTime()
+    {
+        var session = new MonitoringSession
+        {
+            Start = new DateTime(2026, 7, 24, 9, 0, 0, DateTimeKind.Utc),
+            End = new DateTime(2026, 7, 24, 10, 0, 0, DateTimeKind.Utc),
+            Stopped = true
+        };
+
+        session.PausePeriods.Add(new PausePeriod
+        {
+            Start = new DateTime(2026, 7, 24, 9, 10, 0, DateTimeKind.Utc),
+            End = new DateTime(2026, 7, 24, 9, 20, 0, DateTimeKind.Utc)
+        });
+
+        var builder = new DailyReportBuilder();
+
+        var report = builder.Build(session);
+
+        Assert.Equal(
+            TimeSpan.FromMinutes(50),
+            report.Effective);
+    }
 }
