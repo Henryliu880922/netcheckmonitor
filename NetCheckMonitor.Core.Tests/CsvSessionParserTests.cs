@@ -137,4 +137,26 @@ public class CsvSessionParserTests
 
         Assert.Equal("AA:BB:CC:DD:EE:FF", network.MacAddress);
     }
+    [Fact]
+    public void Parse_PausedAndResumedMarkers_AddPausePeriod()
+    {
+        var parser = new CsvSessionParser();
+
+        var session = parser.Parse(new[]
+        {
+        "Timestamp,Type,Status,LatencyMs,Target,Detail",
+        "2026-07-24T09:00:00Z,MARKER,PAUSED,,,User paused monitoring",
+        "2026-07-24T09:05:00Z,MARKER,RESUMED,,,User resumed monitoring"
+    });
+
+        var pause = Assert.Single(session.PausePeriods);
+
+        Assert.Equal(
+            new DateTime(2026, 7, 24, 9, 0, 0, DateTimeKind.Utc),
+            pause.Start);
+
+        Assert.Equal(
+            new DateTime(2026, 7, 24, 9, 5, 0, DateTimeKind.Utc),
+            pause.End);
+    }
 }

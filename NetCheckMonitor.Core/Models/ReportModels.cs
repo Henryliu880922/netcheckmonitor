@@ -71,6 +71,8 @@ public sealed class MonitoringSession
     public List<NetworkInfo> Networks { get; } = [];
 
     public string SourceFile { get; set; } = string.Empty;
+
+    public List<PausePeriod> PausePeriods { get; } = [];
 }
 
 public sealed class NetworkInfo
@@ -123,3 +125,9 @@ public sealed class DailyReportData
 
     public List<EventNote> EventNotes { get; set; } = new();
 }
+public sealed class PausePeriod
+{
+        public DateTime Start { get; set; }
+
+        public DateTime End { get; set; }
+    }

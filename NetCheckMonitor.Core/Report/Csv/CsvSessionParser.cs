@@ -18,6 +18,7 @@ public sealed class CsvSessionParser
         ArgumentNullException.ThrowIfNull(lines);
 
         var session = new MonitoringSession();
+        DateTime? pauseStart = null;
         foreach (string line in lines)
         {
             IReadOnlyList<string> fields = CsvLineParser.Parse(line);
@@ -61,9 +62,27 @@ public sealed class CsvSessionParser
                     var network = ParseNetwork(fields[5]);
                     session.Networks.Add(network);
                 }
+                else if (string.Equals(fields[2], "PAUSED", StringComparison.Ordinal))
+                {
+                    pauseStart = timestamp;
+                }
+                else if (string.Equals(fields[2], "RESUMED", StringComparison.Ordinal))
+                {
+                    if (pauseStart.HasValue)
+                    {
+                        session.PausePeriods.Add(new PausePeriod
+                        {
+                            Start = pauseStart.Value,
+                            End = timestamp
+                        });
 
+                        pauseStart = null;
+                    }
+                    continue;
+                }
                 continue;
             }
+
             if (!string.Equals(fields[1], "CHECK", StringComparison.Ordinal))
             {
                 continue;
