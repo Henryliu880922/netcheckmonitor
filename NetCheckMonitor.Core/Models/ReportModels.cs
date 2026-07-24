@@ -135,6 +135,8 @@ public sealed class DailyReportData
     public int OfflineCount { get; set; }
 
     public double AverageLatency { get; set; }
+
+    public long MaximumLatency { get; set; }
 }
 public sealed class PausePeriod
 {
