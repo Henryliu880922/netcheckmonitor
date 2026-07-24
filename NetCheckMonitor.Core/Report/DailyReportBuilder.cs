@@ -17,6 +17,10 @@ public sealed class DailyReportBuilder
             .Aggregate(
                 TimeSpan.Zero,
                 (sum, item) => sum + (item.End - item.Start));
+        TimeSpan longestOutage = session.Outages.Count == 0
+            ? TimeSpan.Zero
+            : session.Outages.Max(
+                item => item.End - item.Start);
         TimeSpan effective = total - paused;
 
         return new DailyReportData
@@ -27,7 +31,8 @@ public sealed class DailyReportBuilder
 
             Effective = effective,
             Outage = outage,
-            
+            LongestOutage = longestOutage,
+
             Records = session.Records.ToList(),
             EventNotes = session.EventNotes.ToList()
         };
