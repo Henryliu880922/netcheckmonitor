@@ -62,4 +62,40 @@ public class ReportCommandTests
             Console.SetOut(originalOutput);
         }
     }
+    [Fact]
+    public void Execute_ValidArguments_CreatesReportAndReturnsExitCode0()
+    {
+        string tempDirectory = Path.Combine(
+            Path.GetTempPath(),
+            Guid.NewGuid().ToString());
+
+        Directory.CreateDirectory(tempDirectory);
+
+        try
+        {
+            string inputPath = Path.Combine(tempDirectory, "monitor.csv");
+            string outputPath = Path.Combine(tempDirectory, "report.csv");
+
+            File.WriteAllText(
+                inputPath,
+                """
+            Timestamp,Status,Latency
+            2025-01-01T00:00:00,Online,20
+            2025-01-01T00:01:00,Online,25
+            """);
+
+            int exitCode = ReportCommand.Execute(
+            [
+                "--input", inputPath,
+            "--output", outputPath
+            ]);
+
+            Assert.Equal(0, exitCode);
+            Assert.True(File.Exists(outputPath));
+        }
+        finally
+        {
+            Directory.Delete(tempDirectory, true);
+        }
+    }
 }
