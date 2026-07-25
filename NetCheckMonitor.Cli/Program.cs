@@ -4,7 +4,7 @@ if (args.Length == 1 &&
 
     args[0].Equals("help", StringComparison.OrdinalIgnoreCase))
 {
-    HelpCommand.Execute();
+    HelpCommand.ShowGeneralHelp();
     return;
 }
 
@@ -22,5 +22,5 @@ if (args.Length >= 1 &&
     return;
 }
 
-HelpCommand.Execute();
+HelpCommand.ShowGeneralHelp();
 Environment.ExitCode = 1;    

@@ -12,9 +12,7 @@ internal static class ReportCommand
         if (args.Length == 1 &&
     args[0].Equals("--help", StringComparison.OrdinalIgnoreCase))
         {
-            Console.WriteLine("Usage:");
-            Console.WriteLine(
-                "  netcheckmonitor report --input <monitor.csv> --output <report.csv>");
+            HelpCommand.ShowReportHelp();
             return 0;
         }
         ReportArguments arguments;
@@ -25,9 +23,7 @@ internal static class ReportCommand
         }
         catch (ArgumentException)
         {
-            Console.WriteLine("Usage:");
-            Console.WriteLine(
-                "  netcheckmonitor report --input <monitor.csv> --output <report.csv>");
+            HelpCommand.ShowReportHelp();
             return 1;
         }
 
