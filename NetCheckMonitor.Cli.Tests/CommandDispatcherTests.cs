@@ -29,4 +29,28 @@ public class CommandDispatcherTests
             Console.SetOut(originalOutput);
         }
     }
+    [Fact]
+    public void Execute_Help_ReturnsExitCode0()
+    {
+        TextWriter originalOutput = Console.Out;
+        var writer = new StringWriter();
+
+        try
+        {
+            Console.SetOut(writer);
+
+            int exitCode = CommandDispatcher.Execute(["help"]);
+
+            Assert.Equal(0, exitCode);
+
+            string output = writer.ToString();
+
+            Assert.Contains("NetCheckMonitor CLI", output);
+            Assert.Contains("Usage:", output);
+        }
+        finally
+        {
+            Console.SetOut(originalOutput);
+        }
+    }
 }
