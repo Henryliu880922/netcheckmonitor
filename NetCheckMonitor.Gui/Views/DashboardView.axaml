@@ -1,6 +1,8 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="NetCheckMonitor.Gui.Views.DashboardView">
+             xmlns:vm="using:NetCheckMonitor.Gui.ViewModels"
+             x:Class="NetCheckMonitor.Gui.Views.DashboardView"
+             x:DataType="vm:DashboardViewModel">
 
     <Grid Margin="20">
 
@@ -68,6 +70,7 @@
                 <TextBox
                     Grid.Row="0"
                     Grid.Column="1"
+                    Text="{Binding Host}"
                     PlaceholderText="8.8.8.8 或 google.com"/>
 
                 <!-- Interval -->
@@ -80,7 +83,7 @@
                 <NumericUpDown
                     Grid.Row="0"
                     Grid.Column="4"
-                    Value="1000"
+                    Value="{Binding Interval}"
                     Minimum="100"
                     Maximum="60000"
                     Increment="100"/>
@@ -95,7 +98,7 @@
                 <NumericUpDown
                     Grid.Row="0"
                     Grid.Column="7"
-                    Value="3000"
+                    Value="{Binding Timeout}"
                     Minimum="100"
                     Maximum="60000"
                     Increment="100"/>
@@ -127,8 +130,34 @@
         <GroupBox
             Grid.Row="4"
             Header="Results"
-            MinHeight="250"/>
+            MinHeight="250">
 
+            <DataGrid
+                Margin="10"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                GridLinesVisibility="All">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Header="Time"
+                        Width="160"/>
+
+                    <DataGridTextColumn
+                        Header="Host"
+                        Width="*"/>
+
+                    <DataGridTextColumn
+                        Header="Status"
+                        Width="120"/>
+
+                    <DataGridTextColumn
+                        Header="RTT"
+                        Width="100"/>
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </GroupBox>
     </Grid>
-
 </UserControl>
