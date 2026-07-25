@@ -8,11 +8,11 @@ NetCheckMonitor is a free, open-source, ad-free Windows utility that periodicall
 
 Based on **NetCheckMonitor 0.9.8**
 
-Current version: **0.1.0**
+Current development version: **0.1.0-dev**
 
-> [!NOTE]
-> This project is a community-maintained fork of NetCheckMonitor.
-> It is based on NetCheckMonitor 0.9.8 and follows its own independent release cycle.
+> [!WARNING]
+> This fork is currently under active development.
+> The .NET 10 Core and CLI foundations are available, while the graphical interface and several original features are still being migrated.
 
 ## Project Status
 
