@@ -21,7 +21,7 @@ Current development version: **0.1.0-dev**
 The .NET 10 migration and command-line interface are available.
 The graphical user interface and some features from the original NetCheckMonitor are still being migrated.
 
-## 0.1.0 Development Progress
+## Development Progress for 0.1.0 
 
 - Initial public release of the fork.
 - Migrated the project to .NET 10.
