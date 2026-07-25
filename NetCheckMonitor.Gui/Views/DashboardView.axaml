@@ -36,7 +36,92 @@
         <GroupBox
             Grid.Row="2"
             Header="Monitor Settings"
-            MinHeight="120"/>
+            MinHeight="120">
+
+            <Grid Margin="10">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="220"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Host -->
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="Host:"
+                    VerticalAlignment="Center"/>
+
+                <TextBox
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    PlaceholderText="8.8.8.8 或 google.com"/>
+
+                <!-- Interval -->
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    Text="Interval:"
+                    VerticalAlignment="Center"/>
+
+                <NumericUpDown
+                    Grid.Row="0"
+                    Grid.Column="4"
+                    Value="1000"
+                    Minimum="100"
+                    Maximum="60000"
+                    Increment="100"/>
+
+                <!-- Timeout -->
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="6"
+                    Text="Timeout:"
+                    VerticalAlignment="Center"/>
+
+                <NumericUpDown
+                    Grid.Row="0"
+                    Grid.Column="7"
+                    Value="3000"
+                    Minimum="100"
+                    Maximum="60000"
+                    Increment="100"/>
+
+                <!-- Buttons -->
+                <StackPanel
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="9"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Spacing="10">
+
+                    <Button Width="100">
+                        Start
+                    </Button>
+
+                    <Button Width="100">
+                        Stop
+                    </Button>
+
+                </StackPanel>
+
+            </Grid>
+
+        </GroupBox>
 
         <!-- Results -->
         <GroupBox
