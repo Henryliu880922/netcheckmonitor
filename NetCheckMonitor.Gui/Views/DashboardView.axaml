@@ -126,38 +126,43 @@
 
         </GroupBox>
 
-        <!-- Results -->
-        <GroupBox
-            Grid.Row="4"
-            Header="Results"
-            MinHeight="250">
+<!-- Results -->
+<GroupBox
+    Grid.Row="4"
+    Header="Results"
+    MinHeight="250">
 
-            <DataGrid
-                Margin="10"
-                AutoGenerateColumns="False"
-                IsReadOnly="True"
-                GridLinesVisibility="All">
+    <DataGrid
+        ItemsSource="{Binding Results}"
+        Margin="10"
+        AutoGenerateColumns="False"
+        IsReadOnly="True"
+        GridLinesVisibility="All">
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn
-                        Header="Time"
-                        Width="160"/>
+        <DataGrid.Columns>
+            <DataGridTextColumn
+                Header="Time"
+                Binding="{ReflectionBinding Timestamp}"
+                Width="Auto"/>
 
-                    <DataGridTextColumn
-                        Header="Host"
-                        Width="*"/>
+            <DataGridTextColumn
+                Header="Host"
+                Binding="{ReflectionBinding Host}"
+                Width="*"/>
 
-                    <DataGridTextColumn
-                        Header="Status"
-                        Width="120"/>
+            <DataGridTextColumn
+                Header="Status"
+                Binding="{ReflectionBinding Status}"
+                Width="Auto"/>
 
-                    <DataGridTextColumn
-                        Header="RTT"
-                        Width="100"/>
-                </DataGrid.Columns>
+            <DataGridTextColumn
+                Header="RTT"
+                Binding="{ReflectionBinding RoundTripTime}"
+                Width="Auto"/>
+        </DataGrid.Columns>
 
-            </DataGrid>
+    </DataGrid>
 
-        </GroupBox>
+</GroupBox>
     </Grid>
 </UserControl>
