@@ -1,7 +1,7 @@
 using System.IO;
+using NetCheckMonitor.Core;
 using NetCheckMonitor.Core.Report;
 using NetCheckMonitor.Core.Report.Csv;
-using NetCheckMonitor.Core;
 
 namespace NetCheckMonitor.Cli.Commands;
 
@@ -9,9 +9,13 @@ internal static class ReportCommand
 {
     public static void Execute(string[] args)
     {
-        if (args.Length != 4 ||
-            !args[0].Equals("--input", StringComparison.OrdinalIgnoreCase) ||
-            !args[2].Equals("--output", StringComparison.OrdinalIgnoreCase))
+        ReportArguments arguments;
+
+        try
+        {
+            arguments = ReportArgumentsParser.Parse(args);
+        }
+        catch (ArgumentException)
         {
             Console.WriteLine("Usage:");
             Console.WriteLine(
@@ -19,12 +23,12 @@ internal static class ReportCommand
             return;
         }
 
-        string inputPath = args[1];
-        string outputPath = args[3];
+        string inputPath = arguments.InputPath;
+        string outputPath = arguments.OutputPath;
 
         if (!File.Exists(inputPath))
         {
-            Console.WriteLine($"Input file not found: {inputPath}");
+            Console.Error.WriteLine($"Input file not found: {inputPath}");
             return;
         }
 
@@ -32,7 +36,6 @@ internal static class ReportCommand
         MonitoringSession session = parser.Parse(inputPath);
 
         var reportService = new ReportService();
-
         string csv = reportService.ExportDailyReportCsv(session);
 
         File.WriteAllText(outputPath, csv);
