@@ -33,4 +33,33 @@ public class ReportCommandTests
             Console.SetError(originalError);
         }
     }
+    [Fact]
+    public void Execute_MissingRequiredArguments_ReturnsExitCode1()
+    {
+        TextWriter originalOutput = Console.Out;
+        var writer = new StringWriter();
+
+        try
+        {
+            Console.SetOut(writer);
+
+            int exitCode = ReportCommand.Execute(
+                [
+                    "--input", "monitor.csv"
+                ]);
+
+            Assert.Equal(1, exitCode);
+
+            string output = writer.ToString();
+
+            Assert.Contains("Usage:", output);
+            Assert.Contains(
+                "netcheckmonitor report --input <monitor.csv> --output <report.csv>",
+                output);
+        }
+        finally
+        {
+            Console.SetOut(originalOutput);
+        }
+    }
 }
