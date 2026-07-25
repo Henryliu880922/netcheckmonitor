@@ -53,4 +53,28 @@ public class CommandDispatcherTests
             Console.SetOut(originalOutput);
         }
     }
+    [Fact]
+    public void Execute_UnknownCommand_ReturnsExitCode1()
+    {
+        TextWriter originalOutput = Console.Out;
+        var writer = new StringWriter();
+
+        try
+        {
+            Console.SetOut(writer);
+
+            int exitCode = CommandDispatcher.Execute(["unknown"]);
+
+            Assert.Equal(1, exitCode);
+
+            string output = writer.ToString();
+
+            Assert.Contains("NetCheckMonitor CLI", output);
+            Assert.Contains("Usage:", output);
+        }
+        finally
+        {
+            Console.SetOut(originalOutput);
+        }
+    }
 }
