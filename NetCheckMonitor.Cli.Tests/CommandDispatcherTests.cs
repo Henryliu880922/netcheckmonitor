@@ -123,4 +123,30 @@ public class CommandDispatcherTests
             Console.SetOut(originalOutput);
         }
     }
+    [Fact]
+    public void Execute_ReportHelp_ReturnsExitCode0()
+    {
+        TextWriter originalOutput = Console.Out;
+        var writer = new StringWriter();
+
+        try
+        {
+            Console.SetOut(writer);
+
+            int exitCode = CommandDispatcher.Execute(["report", "--help"]);
+
+            Assert.Equal(0, exitCode);
+
+            string output = writer.ToString();
+
+            Assert.Contains("Usage:", output);
+            Assert.Contains(
+                "netcheckmonitor report --input <monitor.csv> --output <report.csv>",
+                output);
+        }
+        finally
+        {
+            Console.SetOut(originalOutput);
+        }
+    }
 }
