@@ -8,11 +8,11 @@ NetCheckMonitor（中文名稱：對外網路連線能力監控程式）是免�
 
 本專案基於 **NetCheckMonitor 0.9.8**
 
-目前版本：**0.1.0**
+目前開發版本：**0.1.0-dev**
 
-> [!NOTE]
-> 本專案為 NetCheckMonitor 的社群維護 Fork。
-> 專案基於 NetCheckMonitor 0.9.8，並採用獨立的版本發布週期。
+> [!WARNING]
+> 本 Fork 目前仍在開發中。
+> 現階段已建立 .NET 10 Core 與 CLI 基礎架構，圖形介面及部分原始功能仍在移植中。
 
 ## 專案狀態
 
