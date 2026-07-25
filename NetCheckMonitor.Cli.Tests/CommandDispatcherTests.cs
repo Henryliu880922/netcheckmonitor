@@ -100,4 +100,27 @@ public class CommandDispatcherTests
             Console.SetOut(originalOutput);
         }
     }
+    [Fact]
+    public void Execute_ReportWithoutArguments_ReturnsExitCode1()
+    {
+        TextWriter originalOutput = Console.Out;
+        var writer = new StringWriter();
+
+        try
+        {
+            Console.SetOut(writer);
+
+            int exitCode = CommandDispatcher.Execute(["report"]);
+
+            Assert.Equal(1, exitCode);
+
+            string output = writer.ToString();
+
+            Assert.Contains("Usage:", output);
+        }
+        finally
+        {
+            Console.SetOut(originalOutput);
+        }
+    }
 }
