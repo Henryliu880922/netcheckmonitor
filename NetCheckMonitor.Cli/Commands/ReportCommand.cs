@@ -32,13 +32,9 @@ internal static class ReportCommand
             return;
         }
 
-        var parser = new CsvSessionParser();
-        MonitoringSession session = parser.Parse(inputPath);
+        var runner = new ReportRunner();
 
-        var reportService = new ReportService();
-        string csv = reportService.ExportDailyReportCsv(session);
-
-        File.WriteAllText(outputPath, csv);
+        runner.Run(inputPath, outputPath);
 
         Console.WriteLine($"Report written to: {outputPath}");
     }
