@@ -6,14 +6,25 @@
 
 NetCheckMonitor is a free, open-source, ad-free Windows utility that periodically checks whether a computer can reach the public Internet. It records outages over hours or days and creates graphical HTML and PDF reports suitable for troubleshooting home Internet service or documenting connection problems for an ISP.
 
-Current version: **0.9.8**
+Based on **NetCheckMonitor 0.9.8**
 
-## What's new in 0.9.8
+Current version: **0.1.0**
 
-- Added an optional Cloudflare scheduled speed-test reference feature (Beta), including test levels, data-usage safeguards, and a separate speed trend report.
-- Simplified the main interface by combining Start/Stop monitoring, unifying report access, and relocating Event Note, Google Drive backup, and data clearing controls.
+> [!NOTE]
+> This project is a community-maintained fork of NetCheckMonitor.
+> It is based on NetCheckMonitor 0.9.8 and follows its own independent release cycle.
 
-See the complete [0.9.8 release notes](docs/RELEASE_NOTES_0.9.8.md).
+## What's new in 0.1.0
+
+- Initial public release of the fork.
+- Migrated the project to .NET 10.
+- Introduced a cross-platform solution structure.
+- Added an experimental command-line interface (CLI).
+- Added automated unit tests for the Core and CLI components.
+- Established an independent versioning scheme.
+
+For changes made before this fork, see the original
+[NetCheckMonitor 0.9.8 release notes](docs/RELEASE_NOTES_0.9.8.md) for details.
 
 ## Download
 
