@@ -19,4 +19,19 @@ public class HelpCommandTests
         Assert.Contains("Usage:", output);
         Assert.Contains("report", output);
     }
+    [Fact]
+    public void ShowReportHelp_WritesReportUsage()
+    {
+        var writer = new StringWriter();
+        Console.SetOut(writer);
+
+        HelpCommand.ShowReportHelp();
+
+        string output = writer.ToString();
+
+        Assert.Contains("Usage:", output);
+        Assert.Contains(
+            "netcheckmonitor report --input <monitor.csv> --output <report.csv>",
+            output);
+    }
 }
