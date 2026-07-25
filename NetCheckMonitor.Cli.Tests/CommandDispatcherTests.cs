@@ -71,6 +71,7 @@ public class CommandDispatcherTests
 
             Assert.Contains("NetCheckMonitor CLI", output);
             Assert.Contains("Usage:", output);
+            Assert.Contains("Unknown command: unknown", output);
         }
         finally
         {

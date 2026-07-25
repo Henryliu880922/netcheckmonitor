@@ -31,6 +31,9 @@ internal static class CommandDispatcher
             return ReportCommand.Execute(args[1..]);
         }
 
+        Console.WriteLine($"Unknown command: {args[0]}");
+        Console.WriteLine();
+
         HelpCommand.ShowGeneralHelp();
         return 1;
     }
