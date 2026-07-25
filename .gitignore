@@ -30,3 +30,6 @@ Desktop.ini
 # .NET SDK
 **/bin/
 **/obj/
+
+# macOS
+.DS_Store
