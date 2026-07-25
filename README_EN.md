@@ -14,6 +14,13 @@ Current version: **0.1.0**
 > This project is a community-maintained fork of NetCheckMonitor.
 > It is based on NetCheckMonitor 0.9.8 and follows its own independent release cycle.
 
+## Project Status
+
+⚠️ This project is currently under active development.
+
+The .NET 10 migration and command-line interface are available.
+The graphical user interface and some features from the original NetCheckMonitor are still being migrated.
+
 ## What's new in 0.1.0
 
 - Initial public release of the fork.
