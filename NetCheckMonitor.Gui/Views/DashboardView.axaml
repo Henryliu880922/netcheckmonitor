@@ -5,18 +5,44 @@
     <Grid Margin="20">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock
-            Grid.Row="0"
-            Text="NetCheckMonitor"
-            FontSize="24"
-            FontWeight="Bold"
-            Margin="0,0,0,20" />
+        <!-- Header -->
+        <Grid Grid.Row="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Text="NetCheckMonitor"
+                FontSize="24"
+                FontWeight="Bold"/>
+
+            <TextBlock
+                Grid.Column="1"
+                Text="● Idle"
+                VerticalAlignment="Center"/>
+
+        </Grid>
+
+        <!-- Monitor Settings -->
+        <GroupBox
+            Grid.Row="2"
+            Header="Monitor Settings"
+            MinHeight="120"/>
+
+        <!-- Results -->
+        <GroupBox
+            Grid.Row="4"
+            Header="Results"
+            MinHeight="250"/>
 
     </Grid>
 
