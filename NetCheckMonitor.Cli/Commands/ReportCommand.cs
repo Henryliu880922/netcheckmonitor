@@ -9,6 +9,14 @@ internal static class ReportCommand
 {
     public static int Execute(string[] args)
     {
+        if (args.Length == 1 &&
+    args[0].Equals("--help", StringComparison.OrdinalIgnoreCase))
+        {
+            Console.WriteLine("Usage:");
+            Console.WriteLine(
+                "  netcheckmonitor report --input <monitor.csv> --output <report.csv>");
+            return 0;
+        }
         ReportArguments arguments;
 
         try
