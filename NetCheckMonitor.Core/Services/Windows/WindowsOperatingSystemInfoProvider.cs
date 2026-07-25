@@ -1,8 +1,10 @@
 namespace NetCheckMonitor.Core.Services.Windows;
 
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using Microsoft.Win32;
 using NetCheckMonitor.Core.Models.SystemInfo;
+[SupportedOSPlatform("windows")]
 
 internal static class WindowsOperatingSystemInfoProvider
 {
