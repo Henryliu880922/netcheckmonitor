@@ -65,6 +65,9 @@ public class ReportCommandTests
     [Fact]
     public void Execute_ValidArguments_CreatesReportAndReturnsExitCode0()
     {
+        TextWriter originalOutput = Console.Out;
+        var writer = new StringWriter();
+
         string tempDirectory = Path.Combine(
             Path.GetTempPath(),
             Guid.NewGuid().ToString());
@@ -73,6 +76,8 @@ public class ReportCommandTests
 
         try
         {
+            Console.SetOut(writer);
+
             string inputPath = Path.Combine(tempDirectory, "monitor.csv");
             string outputPath = Path.Combine(tempDirectory, "report.csv");
 
@@ -91,20 +96,27 @@ public class ReportCommandTests
             ]);
 
             Assert.Equal(0, exitCode);
-
             Assert.True(File.Exists(outputPath));
 
             string report = File.ReadAllText(outputPath);
 
             Assert.False(string.IsNullOrWhiteSpace(report));
-
             Assert.Contains("Day", report);
-
             Assert.Contains("Availability", report);
+
+            string consoleOutput = writer.ToString();
+
+            Assert.Contains("Report written to:", consoleOutput);
+            Assert.Contains(outputPath, consoleOutput);
         }
         finally
         {
-            Directory.Delete(tempDirectory, true);
+            Console.SetOut(originalOutput);
+
+            if (Directory.Exists(tempDirectory))
+            {
+                Directory.Delete(tempDirectory, true);
+            }
         }
     }
 }
