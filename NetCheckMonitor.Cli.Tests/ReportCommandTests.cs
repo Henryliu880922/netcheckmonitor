@@ -91,7 +91,16 @@ public class ReportCommandTests
             ]);
 
             Assert.Equal(0, exitCode);
+
             Assert.True(File.Exists(outputPath));
+
+            string report = File.ReadAllText(outputPath);
+
+            Assert.False(string.IsNullOrWhiteSpace(report));
+
+            Assert.Contains("Day", report);
+
+            Assert.Contains("Availability", report);
         }
         finally
         {
