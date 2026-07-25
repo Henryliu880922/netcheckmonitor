@@ -44,4 +44,28 @@ public class ReportRunnerTests
             File.Delete(output);
         }
     }
+    [Fact]
+    public void Run_InputFileDoesNotExist_ThrowsFileNotFoundException()
+    {
+        string input = Path.Combine(
+            Path.GetTempPath(),
+            Guid.NewGuid().ToString() + ".csv");
+
+        string output = Path.GetTempFileName();
+
+        try
+        {
+            var runner = new ReportRunner();
+
+            Assert.Throws<FileNotFoundException>(
+                () => runner.Run(input, output));
+        }
+        finally
+        {
+            if (File.Exists(output))
+            {
+                File.Delete(output);
+            }
+        }
+    }
 }
