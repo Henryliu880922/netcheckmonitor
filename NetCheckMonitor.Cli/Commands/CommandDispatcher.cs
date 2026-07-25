@@ -16,7 +16,8 @@ internal static class CommandDispatcher
             return 0;
         }
 
-        if (args[0].Equals("version", StringComparison.OrdinalIgnoreCase))
+        if (args[0].Equals("version", StringComparison.OrdinalIgnoreCase) ||
+        args[0].Equals("--version", StringComparison.OrdinalIgnoreCase))
         {
             VersionCommand.Execute();
             return 0;
