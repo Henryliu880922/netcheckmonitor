@@ -69,6 +69,18 @@ See the complete [0.9.8 release notes](docs/RELEASE_NOTES_0.9.8.md).
 
 See the complete [English user guide](docs/User_Guide_EN.md).
 
+## Command Line Interface (CLI)
+
+NetCheckMonitor also includes an experimental command-line interface for automation and scripting.
+
+### Available commands
+
+| Command | Description |
+|---------|-------------|
+| `help` | Show help information. |
+| `version` | Show application version. |
+| `report` | Generate a daily availability report. |
+
 ## Google Drive backup
 
 1. Open **Settings** → **Google Drive Backup Settings**.
