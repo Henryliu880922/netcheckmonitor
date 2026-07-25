@@ -6,10 +6,13 @@ internal static class VersionCommand
 {
     public static void Execute()
     {
-        Version? version = Assembly
+        string informationalVersion = Assembly
             .GetExecutingAssembly()
-            .GetName()
-            .Version;
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+            ?.InformationalVersion
+            ?? "Unknown";
+
+        string version = informationalVersion.Split('+')[0];
 
         Console.WriteLine("NetCheckMonitor CLI");
         Console.WriteLine($"Version {version}");
