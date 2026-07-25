@@ -149,4 +149,27 @@ public class CommandDispatcherTests
             Console.SetOut(originalOutput);
         }
     }
+    [Fact]
+
+    public void Execute_LongHelpOption_ReturnsExitCode0()
+
+    {
+
+        int exitCode = CommandDispatcher.Execute(["--help"]);
+
+        Assert.Equal(0, exitCode);
+
+    }
+
+    [Fact]
+
+    public void Execute_ShortHelpOption_ReturnsExitCode0()
+
+    {
+
+        int exitCode = CommandDispatcher.Execute(["-help"]);
+
+        Assert.Equal(0, exitCode);
+
+    }
 }

@@ -10,13 +10,16 @@ internal static class CommandDispatcher
             return 1;
         }
 
-        if (args[0].Equals("help", StringComparison.OrdinalIgnoreCase))
+        if (args[0].Equals("help", StringComparison.OrdinalIgnoreCase) ||
+        args[0].Equals("-help", StringComparison.OrdinalIgnoreCase) ||
+        args[0].Equals("--help", StringComparison.OrdinalIgnoreCase))
         {
             HelpCommand.ShowGeneralHelp();
             return 0;
         }
 
         if (args[0].Equals("version", StringComparison.OrdinalIgnoreCase) ||
+        args[0].Equals("-version", StringComparison.OrdinalIgnoreCase) ||
         args[0].Equals("--version", StringComparison.OrdinalIgnoreCase))
         {
             VersionCommand.Execute();
