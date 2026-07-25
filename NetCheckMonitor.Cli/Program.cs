@@ -23,4 +23,4 @@ if (args.Length >= 1 &&
 }
 
 HelpCommand.ShowGeneralHelp();
-Environment.ExitCode = 1;    
+Environment.ExitCode = CommandDispatcher.Execute(args); 
