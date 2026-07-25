@@ -1,12 +1,17 @@
 using System.Net.NetworkInformation;
 using NetCheckMonitor.Core.Models.SystemInfo;
-
+using System.Runtime.Versioning;
 namespace NetCheckMonitor.Core.Services.Windows;
 
+[SupportedOSPlatform("windows")]
 public sealed class WindowsNetworkInfoProvider
 {
     public IReadOnlyList<NetworkAdapterInfo> GetNetworkAdapters()
     {
+        if (!OperatingSystem.IsWindows())
+        {
+            return [];
+        }
         List<NetworkAdapterInfo> adapters = [];
 
         int index = 0;

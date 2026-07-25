@@ -1,11 +1,13 @@
-namespace NetCheckMonitor.Core.Services.Windows;
-
+using System.Management;
 using NetCheckMonitor.Core.Models.SystemInfo;
 
-internal static class WindowsBatteryInfoProvider
+namespace NetCheckMonitor.Core.Services.Windows;
+
+public sealed class WindowsBatteryInfoProvider
 {
-    public static BatteryInfo? GetBatteryInfo()
+    public Task<BatteryInfo> GetBatteryInfoAsync(
+        CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(new BatteryInfo());
     }
 }
