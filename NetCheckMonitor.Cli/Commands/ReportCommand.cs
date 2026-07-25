@@ -7,7 +7,7 @@ namespace NetCheckMonitor.Cli.Commands;
 
 internal static class ReportCommand
 {
-    public static void Execute(string[] args)
+    public static int Execute(string[] args)
     {
         ReportArguments arguments;
 
@@ -20,7 +20,7 @@ internal static class ReportCommand
             Console.WriteLine("Usage:");
             Console.WriteLine(
                 "  netcheckmonitor report --input <monitor.csv> --output <report.csv>");
-            return;
+            return 1;
         }
 
         string inputPath = arguments.InputPath;
@@ -29,7 +29,7 @@ internal static class ReportCommand
         if (!File.Exists(inputPath))
         {
             Console.Error.WriteLine($"Input file not found: {inputPath}");
-            return;
+            return 2;
         }
 
         var runner = new ReportRunner();
@@ -37,5 +37,6 @@ internal static class ReportCommand
         runner.Run(inputPath, outputPath);
 
         Console.WriteLine($"Report written to: {outputPath}");
+        return 0;
     }
 }
