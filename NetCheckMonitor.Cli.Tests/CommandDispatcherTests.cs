@@ -8,16 +8,25 @@ public class CommandDispatcherTests
     [Fact]
     public void Execute_NoArguments_ReturnsExitCode1()
     {
+        TextWriter originalOutput = Console.Out;
         var writer = new StringWriter();
-        Console.SetOut(writer);
 
-        int exitCode = CommandDispatcher.Execute(Array.Empty<string>());
+        try
+        {
+            Console.SetOut(writer);
 
-        Assert.Equal(1, exitCode);
+            int exitCode = CommandDispatcher.Execute(Array.Empty<string>());
 
-        string output = writer.ToString();
+            Assert.Equal(1, exitCode);
 
-        Assert.Contains("NetCheckMonitor CLI", output);
-        Assert.Contains("Usage:", output);
+            string output = writer.ToString();
+
+            Assert.Contains("NetCheckMonitor CLI", output);
+            Assert.Contains("Usage:", output);
+        }
+        finally
+        {
+            Console.SetOut(originalOutput);
+        }
     }
 }

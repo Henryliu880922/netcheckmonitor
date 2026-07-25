@@ -8,30 +8,49 @@ public class HelpCommandTests
     [Fact]
     public void ShowGeneralHelp_WritesUsage()
     {
+        TextWriter originalOutput = Console.Out;
         var writer = new StringWriter();
-        Console.SetOut(writer);
 
-        HelpCommand.ShowGeneralHelp();
+        try
+        {
+            Console.SetOut(writer);
 
-        string output = writer.ToString();
+            HelpCommand.ShowGeneralHelp();
 
-        Assert.Contains("NetCheckMonitor CLI", output);
-        Assert.Contains("Usage:", output);
-        Assert.Contains("report", output);
+            string output = writer.ToString();
+
+            Assert.Contains("NetCheckMonitor CLI", output);
+            Assert.Contains("Usage:", output);
+            Assert.Contains("report", output);
+        }
+        finally
+        {
+            Console.SetOut(originalOutput);
+        }
     }
+
     [Fact]
     public void ShowReportHelp_WritesReportUsage()
     {
+        TextWriter originalOutput = Console.Out;
         var writer = new StringWriter();
-        Console.SetOut(writer);
 
-        HelpCommand.ShowReportHelp();
+        try
+        {
+            Console.SetOut(writer);
 
-        string output = writer.ToString();
+            HelpCommand.ShowReportHelp();
 
-        Assert.Contains("Usage:", output);
-        Assert.Contains(
-            "netcheckmonitor report --input <monitor.csv> --output <report.csv>",
-            output);
+            string output = writer.ToString();
+
+            Assert.Contains("Usage:", output);
+            Assert.Contains(
+                "netcheckmonitor report --input <monitor.csv> --output <report.csv>",
+                output);
+        }
+        finally
+        {
+            Console.SetOut(originalOutput);
+        }
     }
 }
