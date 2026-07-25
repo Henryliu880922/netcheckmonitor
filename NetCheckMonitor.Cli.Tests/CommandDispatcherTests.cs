@@ -77,4 +77,27 @@ public class CommandDispatcherTests
             Console.SetOut(originalOutput);
         }
     }
+    [Fact]
+    public void Execute_Version_ReturnsExitCode0()
+    {
+        TextWriter originalOutput = Console.Out;
+        var writer = new StringWriter();
+
+        try
+        {
+            Console.SetOut(writer);
+
+            int exitCode = CommandDispatcher.Execute(["version"]);
+
+            Assert.Equal(0, exitCode);
+
+            string output = writer.ToString();
+
+            Assert.Contains("NetCheckMonitor", output);
+        }
+        finally
+        {
+            Console.SetOut(originalOutput);
+        }
+    }
 }
