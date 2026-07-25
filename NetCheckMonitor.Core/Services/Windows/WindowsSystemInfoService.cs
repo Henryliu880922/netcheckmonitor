@@ -9,6 +9,11 @@ public sealed class WindowsSystemInfoService : ISystemInfoService
     public Task<SystemInfo> GetSystemInfoAsync(
         CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var systemInfo = new SystemInfo
+        {
+            Computer = WindowsComputerInfoProvider.GetComputerInfo(),
+        };
+
+        return Task.FromResult(systemInfo);
     }
 }
