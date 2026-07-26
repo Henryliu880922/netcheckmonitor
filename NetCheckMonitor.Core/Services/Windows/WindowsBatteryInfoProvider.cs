@@ -1,4 +1,5 @@
 using System.Management;
+using System.Runtime.InteropServices.Marshalling;
 using System.Runtime.Versioning;
 using NetCheckMonitor.Core.Models.SystemInfo;
 using NetCheckMonitor.Core.Services.Windows.Helpers;
@@ -33,8 +34,7 @@ public sealed class WindowsBatteryInfoProvider
         /// <summary>部分充電。</summary>
         PartiallyCharged = 11
     }
-    public Task<BatteryInfo> GetBatteryInfoAsync(
-        CancellationToken cancellationToken = default)
+    public BatteryInfo GetBatteryInfo()
     {
         if (!OperatingSystem.IsWindows())
         {
@@ -88,7 +88,7 @@ public sealed class WindowsBatteryInfoProvider
                 fullChargeCapacity * 100.0 / designCapacity;
         }
 
-        return Task.FromResult(new BatteryInfo
+        return new BatteryInfo
         {
             IsPresent = isPresent,
             IsCharging = isCharging,
@@ -100,7 +100,6 @@ public sealed class WindowsBatteryInfoProvider
             HealthPercentage = healthPercentage,
             Manufacturer = manufacturer,
             Model = model
-        });
-
+        };
     }
 }
