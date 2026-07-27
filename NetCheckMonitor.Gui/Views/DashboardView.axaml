@@ -11,6 +11,8 @@
             <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -52,8 +54,8 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="120"/>
                     <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
+                </Grid.ColumnDefinitions>                
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="20"/>
@@ -125,44 +127,128 @@
             </Grid>
 
         </GroupBox>
+        <!-- System Information -->
+        <GroupBox
+            Grid.Row="4"
+            Header="System Information"
+            MinHeight="170">
 
-<!-- Results -->
-<GroupBox
-    Grid.Row="4"
-    Header="Results"
-    MinHeight="250">
+            <Grid Margin="10"
+                  ColumnDefinitions="Auto,*"
+                  RowDefinitions="Auto,Auto,Auto,Auto,Auto">
 
-    <DataGrid
-        ItemsSource="{Binding Results}"
-        Margin="10"
-        AutoGenerateColumns="False"
-        IsReadOnly="True"
-        GridLinesVisibility="All">
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="0,0,12,6"
+                    FontWeight="SemiBold"
+                    Text="Host Name:"/>
 
-        <DataGrid.Columns>
-            <DataGridTextColumn
-                Header="Time"
-                Binding="{ReflectionBinding Timestamp}"
-                Width="Auto"/>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="0,0,0,6"
+                    Text="{Binding SystemInformation.Computer.HostName}"/>
 
-            <DataGridTextColumn
-                Header="Host"
-                Binding="{ReflectionBinding Host}"
-                Width="*"/>
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="0,0,12,6"
+                    FontWeight="SemiBold"
+                    Text="Manufacturer:"/>
 
-            <DataGridTextColumn
-                Header="Status"
-                Binding="{ReflectionBinding Status}"
-                Width="Auto"/>
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="0,0,0,6"
+                    Text="{Binding SystemInformation.Computer.Manufacturer}"/>
 
-            <DataGridTextColumn
-                Header="RTT"
-                Binding="{ReflectionBinding RoundTripTime}"
-                Width="Auto"/>
-        </DataGrid.Columns>
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="0,0,12,6"
+                    FontWeight="SemiBold"
+                    Text="Model:"/>
 
-    </DataGrid>
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="0,0,0,6"
+                    Text="{Binding SystemInformation.Computer.Model}"/>
 
-</GroupBox>
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Margin="0,0,12,6"
+                    FontWeight="SemiBold"
+                    Text="Operating System:"/>
+
+                <StackPanel
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="0,0,0,6"
+                    Orientation="Horizontal"
+                    Spacing="6">
+
+                    <TextBlock
+                        Text="{Binding SystemInformation.OperatingSystem.Name}"/>
+
+                    <TextBlock
+                        Text="{Binding SystemInformation.OperatingSystem.Version}"/>
+                </StackPanel>
+
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    FontWeight="SemiBold"
+                    Text="Processor:"/>
+
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Text="{Binding SystemInformation.Processor.Model}"/>
+
+            </Grid>
+        </GroupBox>
+
+        <!-- Results -->
+        <GroupBox
+            Grid.Row="6"
+            Header="Results"
+            MinHeight="250">
+
+            <DataGrid
+                ItemsSource="{Binding Results}"
+                Margin="10"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                GridLinesVisibility="All">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Header="Time"
+                        Binding="{ReflectionBinding Timestamp}"
+                        Width="Auto"/>
+
+                    <DataGridTextColumn
+                        Header="Host"
+                        Binding="{ReflectionBinding Host}"
+                        Width="*"/>
+
+                    <DataGridTextColumn
+                        Header="Status"
+                        Binding="{ReflectionBinding Status}"
+                        Width="Auto"/>
+
+                    <DataGridTextColumn
+                        Header="RTT"
+                        Binding="{ReflectionBinding RoundTripTime}"
+                        Width="Auto"/>
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </GroupBox>
     </Grid>
 </UserControl>
