@@ -1,5 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="https://codewf.com"
+             xmlns:lang="clr-namespace:Localization.Dashboard"
              xmlns:vm="using:NetCheckMonitor.Gui.ViewModels"
              x:Class="NetCheckMonitor.Gui.Views.DashboardView"
              x:DataType="vm:DashboardViewModel">
@@ -114,9 +116,8 @@
                     HorizontalAlignment="Right"
                     Spacing="10">
 
-                    <Button Width="100">
-                        Start
-                    </Button>
+                <Button Width="100"
+                    Content="{c:I18n {x:Static lang:DashboardView.Start}}"/>
 
                     <Button Width="100">
                         Stop

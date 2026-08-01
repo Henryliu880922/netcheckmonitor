@@ -8,10 +8,11 @@
         d:DesignHeight="600"
         x:Class="NetCheckMonitor.Gui.Views.MainWindow"
         Title="NetCheckMonitor"
-        Width="900"
-        Height="600"
+        Width="950"
+        Height="850"
         MinWidth="700"
-        MinHeight="450">
+        MinHeight="450"
+        WindowStartupLocation="CenterScreen">
 
     <views:DashboardView />
 

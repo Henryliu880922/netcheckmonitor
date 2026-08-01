@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+
+  <data name="MonitorSettings" xml:space="preserve">
+    <value>監控設定</value>
+  </data>
+
+  <data name="SystemInformation" xml:space="preserve">
+    <value>系統資訊</value>
+  </data>
+
+  <data name="Results" xml:space="preserve">
+    <value>結果</value>
+  </data>
+
+  <data name="Host" xml:space="preserve">
+    <value>主機</value>
+  </data>
+
+  <data name="Interval" xml:space="preserve">
+    <value>間隔</value>
+  </data>
+
+  <data name="Timeout" xml:space="preserve">
+    <value>逾時</value>
+  </data>
+
+  <data name="Start" xml:space="preserve">
+    <value>開始</value>
+  </data>
+
+  <data name="Stop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+
+  <data name="Manufacturer" xml:space="preserve">
+    <value>製造商</value>
+  </data>
+
+  <data name="Model" xml:space="preserve">
+    <value>型號</value>
+  </data>
+
+  <data name="OperatingSystem" xml:space="preserve">
+    <value>作業系統</value>
+  </data>
+
+  <data name="Processor" xml:space="preserve">
+    <value>處理器</value>
+  </data>
+
+  <data name="Memory" xml:space="preserve">
+    <value>記憶體</value>
+  </data>
+
+  <data name="HostPlaceholder" xml:space="preserve">
+    <value>8.8.8.8 或 google.com</value>
+  </data>
+</root>

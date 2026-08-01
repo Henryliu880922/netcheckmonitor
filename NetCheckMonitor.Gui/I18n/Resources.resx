@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+
+  <data name="MonitorSettings" xml:space="preserve">
+    <value>Monitor Settings</value>
+  </data>
+
+  <data name="SystemInformation" xml:space="preserve">
+    <value>System Information</value>
+  </data>
+
+  <data name="Results" xml:space="preserve">
+    <value>Results</value>
+  </data>
+
+  <data name="Host" xml:space="preserve">
+    <value>Host</value>
+  </data>
+
+  <data name="Interval" xml:space="preserve">
+    <value>Interval</value>
+  </data>
+
+  <data name="Timeout" xml:space="preserve">
+    <value>Timeout</value>
+  </data>
+
+  <data name="Localization.Dashboard.DashboardView.Start" xml:space="preserve">
+  <value>Start</value>
+  </data>
+
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+
+  <data name="Manufacturer" xml:space="preserve">
+    <value>Manufacturer</value>
+  </data>
+
+  <data name="Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+
+  <data name="OperatingSystem" xml:space="preserve">
+    <value>Operating System</value>
+  </data>
+
+  <data name="Processor" xml:space="preserve">
+    <value>Processor</value>
+  </data>
+
+  <data name="Memory" xml:space="preserve">
+    <value>Memory</value>
+  </data>
+
+  <data name="HostPlaceholder" xml:space="preserve">
+    <value>8.8.8.8 or google.com</value>
+  </data>
+</root>
